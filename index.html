@@ -33,9 +33,12 @@
             nodes.forEach(node => {
                 const span = document.createElement('span');
                 span.innerHTML = Array.from(node.textContent).map(char => {
-                    // Check if char is just whitespace
                     if (char.trim() === '') {
-                        return char; // Return whitespace as-is, without wrapping
+                        return char;
+                    }
+                    // Special handling for commas
+                    if (char === ',') {
+                        return `<span style="display: inline-block; margin-right: 0.1em;">${char}</span>`;
                     }
                     return `<span style="display: inline-block;">${char}</span>`;
                 }).join('');
