@@ -100,8 +100,11 @@
             background-image: repeating-linear-gradient(0deg,
                     transparent,
                     transparent 2px,
-                    rgba(0, 0, 0, 0.1) 2px,
-                    rgba(0, 0, 0, 0.1) 4px);
+                    rgba(0, 150, 209, 0.1) 2px,
+                    rgba(0, 135, 212, 0.1) 4px);
+            overflow-wrap: break-word;
+            white-space: pre-wrap;
+            max-width: 100%;
         }
 
         /* Option 1: More contrasting scanlines */
@@ -199,27 +202,6 @@
             font-family: 'nasin-nanpa', sans-serif;
             font-size: 16px;
             /* Base size for desktop */
-        }
-
-        /* For mobile devices */
-        @media screen and (max-width: 768px) {
-            html {
-                font-size: 24px;
-                /* Larger base size for mobile */
-            }
-
-            /* Make the container narrower on mobile */
-            .container {
-                padding: 0 1rem;
-            }
-        }
-
-        /* For even smaller screens */
-        @media screen and (max-width: 480px) {
-            html {
-                font-size: 28px;
-                /* Even larger for very small screens */
-            }
         }
     </style>
 </head>
