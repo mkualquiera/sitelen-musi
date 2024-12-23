@@ -1,0 +1,13 @@
+characters:
+  Lejo1: <ct> lete esun jan o </ct>
+  Lejo2: <ct> lili en jaki olin </ct>
+  Lejo3: <ct> lete esun jan olin </ct>
+  Elena: <ct> esun lete en nasa awen </ct>
+  Panki: <ct> pana ante nasa kiwen ike </ct>
+formatting:
+  "pi ": <pi>
+  "~": </pi>
+  "{": <quote>
+  "}": </quote>
+  "[": <tn>
+  "]": </tn>
