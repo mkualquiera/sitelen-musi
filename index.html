@@ -36,11 +36,8 @@
                     if (char.trim() === '') {
                         return char;
                     }
-                    // Special handling for commas
-                    if (char === ',') {
-                        return `<span style="display: inline-block; margin-right: 0.1em;">${char}</span>`;
-                    }
-                    return `<span style="display: inline-block;">${char}</span>`;
+                    // Add min-width to all character spans to prevent collapse
+                    return `<span style="display: inline-block; min-width: 1em;">${char}</span>`;
                 }).join('');
                 node.parentNode.replaceChild(span, node);
             });
