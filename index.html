@@ -36,6 +36,10 @@
                     if (char.trim() === '') {
                         return char;
                     }
+                    if (char === ',') {
+                        // disable ligatures
+                        return `<span style="display: inline-block; min-width: 1em; font-feature-settings: 'liga' 0, 'calt' 0, 'kern' 0;">${char}</span>`;
+                    }
                     // Add min-width to all character spans to prevent collapse
                     return `<span style="display: inline-block; min-width: 1em;">${char}</span>`;
                 }).join('');
