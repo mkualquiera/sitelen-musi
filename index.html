@@ -15,8 +15,8 @@
                         if (['CT', 'TN', 'PI'].includes(node.parentElement?.tagName)) {
                             return NodeFilter.FILTER_REJECT;
                         }
-                        // Skip if text is just whitespace
-                        if (!node.textContent.trim()) {
+                        // Only skip if text is PURELY whitespace
+                        if (!node.textContent) {
                             return NodeFilter.FILTER_REJECT;
                         }
                         return NodeFilter.FILTER_ACCEPT;
@@ -32,9 +32,13 @@
 
             nodes.forEach(node => {
                 const span = document.createElement('span');
-                span.innerHTML = Array.from(node.textContent).map(char =>
-                    `<span style="display: inline-block;">${char}</span>`
-                ).join('');
+                span.innerHTML = Array.from(node.textContent).map(char => {
+                    // Check if char is just whitespace
+                    if (char.trim() === '') {
+                        return char; // Return whitespace as-is, without wrapping
+                    }
+                    return `<span style="display: inline-block;">${char}</span>`;
+                }).join('');
                 node.parentNode.replaceChild(span, node);
             });
         });
