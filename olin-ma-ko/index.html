@@ -306,7 +306,7 @@
                 secondary: ['#83c5be', '#ff8c42'],
                 accent: ['#2f5233', '#ff6b6b'],
                 quote: ['#006d77', '#ff6b6b'],
-                overlay: ['255, 255, 255', '30, 0, 0']
+                overlay: ['#ffffff', '#200000']
             };
 
             // Update each color
@@ -320,6 +320,12 @@
                 if (key === 'bg') {
                     document.documentElement.style.setProperty(
                         '--current-bg-rgb',
+                        interpolateRgbComponents(startColor, endColor, scrollFactor)
+                    );
+                }
+                if (key === 'overlay') {
+                    document.documentElement.style.setProperty(
+                        '--current-overlay-rgb',
                         interpolateRgbComponents(startColor, endColor, scrollFactor)
                     );
                 }
