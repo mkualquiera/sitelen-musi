@@ -331,6 +331,114 @@
             height: auto;
         }
     </style>
+
+    <script>
+        // First, update CSS variables to include both themes
+        const css = `
+:root {
+    /* Beach Theme */
+    --sand-color: #f4e4bc;
+    --deep-teal: #006d77;
+    --light-teal: #83c5be;
+    --seaweed-green: #2f5233;
+    --coral: #e29578;
+    --shell-pink: #ffddd2;
+    --ocean-blue: #006d77;
+    
+    /* Volcanic Theme */
+    --volcanic-bg: #1a0f0f;
+    --lava-red: #ff4400;
+    --ember-orange: #ff8c42;
+    --ash-gray: #4a4a4a;
+    --magma-glow: #ff6b6b;
+    
+    /* Dynamic colors that will be interpolated */
+    --current-bg: var(--sand-color);
+    --current-primary: var(--deep-teal);
+    --current-secondary: var(--light-teal);
+    --current-accent: var(--seaweed-green);
+    --current-text: #252422;
+}
+
+/* Update all color references to use dynamic variables */
+html {
+    background-color: var(--current-bg);
+    color: var(--current-text);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+lipu {
+    border-left-color: var(--current-primary);
+    transition: border-color 0.3s ease;
+}
+
+memory {
+    border-left-color: var(--current-secondary);
+    transition: border-color 0.3s ease;
+}
+
+/* Add transitions to all other elements */
+ct, tn, pi, quote {
+    transition: all 0.3s ease;
+}`;
+
+        // Add the CSS to the document
+        const style = document.createElement('style');
+        style.textContent = css;
+        document.head.appendChild(style);
+
+        // Function to interpolate between two colors
+        function interpolateColor(color1, color2, factor) {
+            const result = color1.match(/\d+/g).map((a, i) => {
+                const b = color2.match(/\d+/g)[i];
+                return Math.round(a * (1 - factor) + b * factor);
+            });
+            return `rgb(${result.join(',')})`;
+        }
+
+        // Function to update colors based on scroll position
+        function updateColors() {
+            const scrollPosition = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollFactor = Math.min(scrollPosition / docHeight, 1);
+
+            // Get computed styles for both themes
+            const beachBg = '#f4e4bc';
+            const volcanicBg = '#1a0f0f';
+            const beachPrimary = '#006d77';
+            const volcanicPrimary = '#ff4400';
+
+            // Update CSS variables
+            document.documentElement.style.setProperty(
+                '--current-bg',
+                interpolateColor(beachBg, volcanicBg, scrollFactor)
+            );
+
+            document.documentElement.style.setProperty(
+                '--current-primary',
+                interpolateColor(beachPrimary, volcanicPrimary, scrollFactor)
+            );
+
+            // Update text color
+            const textColor = scrollFactor > 0.5 ? '#ffffff' : '#252422';
+            document.documentElement.style.setProperty('--current-text', textColor);
+
+            // Add volcanic glow effect as scroll increases
+            const glowOpacity = Math.max(0, (scrollFactor - 0.5) * 2);
+            document.documentElement.style.setProperty(
+                '--volcanic-glow',
+                `0 0 ${20 * scrollFactor}px rgba(255, 68, 0, ${glowOpacity})`
+            );
+        }
+
+        // Add scroll event listener
+        window.addEventListener('scroll', () => {
+            requestAnimationFrame(updateColors);
+        });
+
+        // Initial color update
+        updateColors();
+    </script>
 </head>
 
 <body>
