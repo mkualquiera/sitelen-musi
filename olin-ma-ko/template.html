@@ -323,6 +323,12 @@
                         interpolateRgbComponents(startColor, endColor, scrollFactor)
                     );
                 }
+                if (key === 'overlay') {
+                    document.documentElement.style.setProperty(
+                        '--current-overlay-rgb',
+                        interpolateRgbComponents(startColor, endColor, scrollFactor)
+                    );
+                }
             });
 
             // Update text color with a threshold
