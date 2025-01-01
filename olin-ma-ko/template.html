@@ -150,7 +150,6 @@
             border-bottom: 0.12em solid var(--current-primary);
             padding: 0.13em;
             margin: 0.13em;
-            background-color: rgba(var(--current-overlay-rgb), 0.3);
             transition: all 0.3s ease;
         }
 
@@ -159,7 +158,7 @@
             display: inline-block;
             padding: 0.8em;
             margin: 0.5em;
-            background-color: rgba(var(--current-overlay-rgb), 0.05);
+            background-color: rgba(var(--current-overlay-rgb), 0.3);
             border-radius: 0.5em;
             border: 1px solid var(--current-primary);
             color: var(--current-quote);
@@ -267,7 +266,7 @@
     --beach-accent: #2f5233;
     --beach-text: #252422;
     --beach-quote: #006d77;
-    --beach-overlay: 255, 255, 255;
+    --beach-overlay: #ffffff;
     
     /* Volcanic Theme */
     --volcanic-bg: #1a0f0f;
@@ -276,7 +275,7 @@
     --volcanic-accent: #ff6b6b;
     --volcanic-text: #ffffff;
     --volcanic-quote: #ff6b6b;
-    --volcanic-overlay: 30, 0, 0;
+    --volcanic-overlay: #200000;
     
     /* Dynamic colors */
     --current-bg: var(--beach-bg);
@@ -306,7 +305,8 @@
                 primary: ['#006d77', '#ff4400'],
                 secondary: ['#83c5be', '#ff8c42'],
                 accent: ['#2f5233', '#ff6b6b'],
-                quote: ['#006d77', '#ff6b6b']
+                quote: ['#006d77', '#ff6b6b'],
+                overlay: ['255, 255, 255', '30, 0, 0']
             };
 
             // Update each color
