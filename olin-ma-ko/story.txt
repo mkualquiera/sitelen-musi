@@ -1,5 +1,8 @@
-1
-
+<open>
+<h1>olin ma ko</h1>
+</open>
+<lipu>
+<h2>lipu wan</h2>
 meli li pona lukin, li pona lukin suli la, mi ken ala sona awen ni: tenpo pi sona ala meli ~ la, pali mi li seme. tomo palisa pi kiwen walo ~ li nasa tawa mi tan ni: tomo palisa ni li tawa lon mi lukin ala. tenpo open pi lukin tawa meli ~ la, meli li poka e tomo palisa ni, li tawa selo meli e telo. ken la... selo meli li tawa e telo. selo walo meli li suno, sama e mun lon telo. linja walo meli li tawa, lon monsi sijelo. meli li len ala, li suwi lukin.
 
 mi wile pilin e meli. mi tawa. taso ni la, tomo palisa li tawa pakala e mi. nasa. mi sona la, tenpo monsi la, tomo palisa ni li lon ala lon ni...
@@ -15,9 +18,9 @@ meli li awen ala, li tawa anpa, li sitelen lon ma pi ko jelo ~, lon poka mi. sit
 meli li toki e { sina pona suli tawa ma pi ko jelo ~ mi... sina wile tawa, sama telo, li wile tawa, sama kon, li wile tawa, sama tenpo. jan ante li wile awen kiwen. jan ante li sona ala e wile jan ante. taso sina la, sina sona e wile sina. }
 
 toki meli en pona lukin meli li seli e mi. insa selo mi la, insa palisa kiwen mi la, meli li ante lon insa mi e pilin mi.
-
-2
-
+</lipu>
+<lipu>
+<h2>lipu tu</h2>
 tenpo kipisi la, mi tawa poka sijelo meli. nena meli li suli la, luka mi li wile e ni, tawa lon nena ni. mi en meli li pilin sijelo la, pilin li sama ni: tenpo kipisi la, ma suli telo li tawa insa mi. mi telo lon poki luka meli la, sijelo mi li kon lon poka meli. tenpo la, meli en mi li pilin sama ni.
 
 meli li pilin pona, li toki e { mi lukin e tomo lon telo. tomo li pi ilo pi lukin sama ~ ~. lon tomo la, jan li lukin tawa mi tu. } taso ni la, mi ken ala lukin e tomo. mi ken taso lukin e meli. tawa mi la, meli li lon taso. 
@@ -51,3 +54,4 @@ ma linja tawa meli li suli. tenpo ale pi lukin tawa meli ~ la, linja tawa meli l
 mi ken ala tawa suwi tan ni, noka mi li pakala. selo mi li tawa insa ko. pilin li ike suli la, nimi pilin li ala. mi sona e ni, mi poka ala meli la, mi pilin sama moli, taso ni, lon tenpo suli. pilin li sama e ni, pali ala e mi. 
 
 mi pilin e ni: mi toki e ni { tenpo sin la, mi pali e ale. mi ante tawa ale wile sina. tan ni la, mi wile e ni, sina wile e ni, mi awen ala kepeken mi. }
+</lipu>
