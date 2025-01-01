@@ -1,0 +1,326 @@
+<html>
+
+<head>
+    <title>jan ante</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const walker = document.createTreeWalker(
+                document.body,
+                NodeFilter.SHOW_TEXT,
+                {
+                    acceptNode: function (node) {
+                        // Skip if parent is one of our special tags
+                        if (['CT', 'TN', 'PI'].includes(node.parentElement?.tagName)) {
+                            return NodeFilter.FILTER_REJECT;
+                        }
+                        // Only skip if text is PURELY whitespace
+                        if (!node.textContent) {
+                            return NodeFilter.FILTER_REJECT;
+                        }
+                        return NodeFilter.FILTER_ACCEPT;
+                    }
+                }
+            );
+
+            const nodes = [];
+            let node;
+            while (node = walker.nextNode()) {
+                nodes.push(node);
+            }
+
+            nodes.forEach(node => {
+                const span = document.createElement('span');
+                span.innerHTML = Array.from(node.textContent).map(char => {
+                    if (char.trim() === '') {
+                        return char;
+                    }
+                    if (char === ',') {
+                        // disable ligatures
+                        return `<span style="display: inline-block; min-width: 1em; font-feature-settings: 'liga' 0, 'calt' 0, 'kern' 0;">${char}</span>`;
+                    }
+                    // Add min-width to all character spans to prevent collapse
+                    return `<span style="display: inline-block; min-width: 1em;">${char}</span>`;
+                }).join('');
+                node.parentNode.replaceChild(span, node);
+            });
+        });
+    </script>
+
+    <style>
+        @font-face {
+            font-family: 'nasin-nanpa';
+            src: url('/jan-ante/fonts/nasin-nanpa-4.0.1.otf') format('opentype');
+        }
+
+
+        :root {
+            --text-color: #ffffff;
+            --neon-blue: #0ff;
+            --neon-purple: #f0f;
+            --neon-green: #0f0;
+            --neon-red: #ff2d2d;
+            --dialog-bg: rgba(0, 0, 0, 0.8);
+            --quote-color: #ffab8a;
+        }
+
+        html {
+            background-color: #000000;
+            color: var(--text-color);
+        }
+
+        /* Chapter styling */
+        lipu {
+            display: block;
+            margin: 2em 0;
+            padding: 1em;
+            border-left: 0.2em solid var(--neon-blue);
+        }
+
+        lipu h1 {
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-blue);
+            margin-bottom: 1em;
+        }
+
+        /* Memory/flashback styling */
+        memory {
+            display: block;
+            margin: 2em 0;
+            padding: 1em;
+            border-left: 0.2em solid var(--neon-purple);
+        }
+
+        memory h1 {
+            color: var(--neon-purple);
+            text-shadow: 0 0 10px var(--neon-purple);
+            margin-bottom: 1em;
+        }
+
+        /* Cartouche styling - more subtle */
+        ct {
+            border: 0.12em solid var(--neon-blue);
+            border-radius: 5px;
+            display: inline-block;
+            margin: 0.13em;
+            padding: 0.2em 0.4em;
+            box-shadow: 0 0 3px var(--neon-blue);
+        }
+
+        /* Name styling */
+        tn {
+            border: 0.12em dashed var(--neon-red);
+            display: inline-block;
+            padding: 0.2em 0.4em;
+            box-shadow: 0 0 3px var(--neon-red);
+        }
+
+        /* Pi styling with constrained glow */
+        pi {
+            display: inline-block;
+            border-left: 0.12em solid var(--neon-purple);
+            border-bottom: 0.12em solid var(--neon-purple);
+            border-top: none;
+            border-right: none;
+            padding: 0.13em;
+            margin: 0.13em;
+            /* More precise box-shadow that only shows in bottom-left */
+            box-shadow:
+                -2px 2px 3px -1px var(--neon-purple),
+                /* Main shadow */
+                -1px 1px 2px -1px var(--neon-purple);
+            /* Subtle inner shadow */
+        }
+
+
+        /* Quote styling like JRPG dialog */
+        quote {
+            display: inline-block;
+            padding: 0.5em;
+            margin: 0.5em;
+            background: var(--dialog-bg);
+            border-radius: 0.3em;
+            box-shadow: 0 0 10px rgba(65, 65, 65, 0.5);
+            /* Add scanline effect to dialog */
+            background-image: repeating-linear-gradient(0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(59, 199, 255, 0.1) 2px,
+                    rgba(0, 135, 212, 0.1) 4px);
+            max-width: 100%;
+            color: var(--quote-color);
+        }
+
+        /* Option 1: More contrasting scanlines */
+        html::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg,
+                    rgba(0, 0, 0, 0.2),
+                    /* Darker lines */
+                    rgba(0, 0, 0, 0.2) 1px,
+                    transparent 1px,
+                    transparent 4px
+                    /* Increased spacing */
+                );
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Vibrating h1s */
+        @keyframes glitch {
+            0% {
+                transform: translate(0);
+            }
+
+            20% {
+                transform: translate(-2px, 2px);
+            }
+
+            40% {
+                transform: translate(-2px, -2px);
+            }
+
+            60% {
+                transform: translate(2px, 2px);
+            }
+
+            80% {
+                transform: translate(2px, -2px);
+            }
+
+            100% {
+                transform: translate(0);
+            }
+        }
+
+        lipu h2,
+        memory h2 {
+            animation: glitch 2s ease-in-out infinite;
+        }
+
+        /* Optional: we can also add a text-flicker effect */
+        @keyframes textFlickerBlue {
+            0% {
+                text-shadow: 0 0 10px var(--neon-blue);
+            }
+
+            5% {
+                text-shadow: none;
+            }
+
+            10% {
+                text-shadow: 0 0 10px var(--neon-blue);
+            }
+
+            20% {
+                text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+            }
+
+            25% {
+                text-shadow: none;
+            }
+
+            30% {
+                text-shadow: 0 0 10px var(--neon-blue);
+            }
+
+            100% {
+                text-shadow: 0 0 10px var(--neon-blue);
+            }
+        }
+
+        @keyframes textFlickerPurple {
+            0% {
+                text-shadow: 0 0 10px var(--neon-purple);
+            }
+
+            5% {
+                text-shadow: none;
+            }
+
+            10% {
+                text-shadow: 0 0 10px var(--neon-purple);
+            }
+
+            20% {
+                text-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple);
+            }
+
+            25% {
+                text-shadow: none;
+            }
+
+            30% {
+                text-shadow: 0 0 10px var(--neon-purple);
+            }
+
+            100% {
+                text-shadow: 0 0 10px var(--neon-purple);
+            }
+        }
+
+        lipu h2 {
+            animation: glitch 1s ease-in-out infinite, textFlickerBlue 3s linear infinite;
+        }
+
+        memory h2 {
+            animation: glitch 1s ease-in-out infinite, textFlickerPurple 3s linear infinite;
+        }
+
+        open h1 {
+            text-shadow: 0 0 10px var(--neon-green);
+            font-size: 3em;
+        }
+
+        html {
+            font-family: 'nasin-nanpa', sans-serif;
+            font-size: 16px;
+            /* Base size for desktop */
+        }
+
+        body {
+            word-break: break-all;
+            /* More aggressive breaking */
+            overflow-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        ct,
+        tn,
+        pi {
+            display: inline-block;
+            white-space: normal;
+            break-inside: avoid;
+            break-after: avoid;
+            break-before: avoid;
+        }
+
+        quote::before {
+            content: "「";
+            left: 0.5em;
+            /* Adjust position as needed */
+            top: 0;
+        }
+
+        quote::after {
+            content: "」";
+            right: 0.5em;
+            /* Adjust position as needed */
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 100%; max-width: 800px; margin: 0 auto; padding: 0 1 rem;">
+        <div>{{{content}}}</div>
+    </div>
+</body>
+
+</html>
