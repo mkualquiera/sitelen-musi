@@ -92,7 +92,7 @@
             margin: 2em 0;
             padding: 1em;
             border-left: 0.2em solid var(--current-secondary);
-            background: rgba(255, 255, 255, 0.3);
+            background: linear-gradient(rgba(var(--current-bg-rgb), 0.3), rgba(var(--current-bg-rgb), 0.3));
             border-radius: 0.5em;
             transition: all 0.3s ease;
         }
@@ -111,7 +111,7 @@
             margin: 2em 0;
             padding: 1em;
             border-left: 0.2em solid var(--current-primary);
-            background: rgba(131, 197, 190, 0.1);
+            background: linear-gradient(rgba(var(--current-bg-rgb), 0.2), rgba(var(--current-bg-rgb), 0.2));
             border-radius: 0.5em;
             transition: all 0.3s ease;
         }
@@ -138,7 +138,7 @@
             border: 0.12em solid var(--current-accent);
             display: inline-block;
             padding: 0.2em 0.4em;
-            background: rgba(226, 149, 120, 0.1);
+            background: linear-gradient(rgba(var(--current-bg-rgb), 0.2), rgba(var(--current-bg-rgb), 0.2));
             border-radius: 5px;
             transition: all 0.3s ease;
         }
@@ -150,7 +150,7 @@
             border-bottom: 0.12em solid var(--current-primary);
             padding: 0.13em;
             margin: 0.13em;
-            background: rgba(0, 109, 119, 0.05);
+            background: linear-gradient(rgba(var(--current-bg-rgb), 0.1), rgba(var(--current-bg-rgb), 0.1));
             transition: all 0.3s ease;
         }
 
@@ -159,7 +159,7 @@
             display: inline-block;
             padding: 0.8em;
             margin: 0.5em;
-            background: rgba(255, 255, 255, 0.4);
+            background: linear-gradient(rgba(var(--current-bg-rgb), 0.3), rgba(var(--current-bg-rgb), 0.3));
             border-radius: 0.5em;
             border: 1px solid var(--current-primary);
             color: var(--current-quote);
@@ -226,14 +226,10 @@
     <script>
         // Helper function to convert hex to RGB
         function hexToRgb(hex) {
-            // Remove # if present
             hex = hex.replace('#', '');
-
-            // Parse hex values
             const r = parseInt(hex.substring(0, 2), 16);
             const g = parseInt(hex.substring(2, 4), 16);
             const b = parseInt(hex.substring(4, 6), 16);
-
             return [r, g, b];
         }
 
@@ -247,6 +243,18 @@
             const b = Math.round(rgb1[2] * (1 - factor) + rgb2[2] * factor);
 
             return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        // Function to interpolate RGB components
+        function interpolateRgbComponents(color1, color2, factor) {
+            const rgb1 = hexToRgb(color1);
+            const rgb2 = hexToRgb(color2);
+
+            const r = Math.round(rgb1[0] * (1 - factor) + rgb2[0] * factor);
+            const g = Math.round(rgb1[1] * (1 - factor) + rgb2[1] * factor);
+            const b = Math.round(rgb1[2] * (1 - factor) + rgb2[2] * factor);
+
+            return `${r}, ${g}, ${b}`;
         }
 
         // Add the base CSS
@@ -270,26 +278,12 @@
     
     /* Dynamic colors */
     --current-bg: var(--beach-bg);
+    --current-bg-rgb: 244, 228, 188;
     --current-primary: var(--beach-primary);
     --current-secondary: var(--beach-secondary);
     --current-accent: var(--beach-accent);
     --current-text: var(--beach-text);
     --current-quote: var(--beach-quote);
-}
-
-/* Update transitions */
-html, body, lipu, memory, ct, tn, pi, quote {
-    transition: all 0.3s ease;
-}
-
-/* Quote specific styling */
-quote {
-    color: var(--current-quote);
-    border-color: var(--current-primary);
-}
-
-quote::before, quote::after {
-    color: var(--current-quote);
 }`;
 
         // Add the CSS to the document
@@ -318,6 +312,14 @@ quote::before, quote::after {
                     `--current-${key}`,
                     interpolateColor(startColor, endColor, scrollFactor)
                 );
+
+                // Also update RGB components for background
+                if (key === 'bg') {
+                    document.documentElement.style.setProperty(
+                        '--current-bg-rgb',
+                        interpolateRgbComponents(startColor, endColor, scrollFactor)
+                    );
+                }
             });
 
             // Update text color with a threshold
@@ -346,8 +348,6 @@ quote::before, quote::after {
 
         // Initial color update
         updateColors();
-
-
     </script>
 </head>
 
