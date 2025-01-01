@@ -225,53 +225,72 @@
     </style>
 
     <script>
-        // First, update CSS variables to include both themes
+        // Helper function to convert hex to RGB
+        function hexToRgb(hex) {
+            // Remove # if present
+            hex = hex.replace('#', '');
+
+            // Parse hex values
+            const r = parseInt(hex.substring(0, 2), 16);
+            const g = parseInt(hex.substring(2, 4), 16);
+            const b = parseInt(hex.substring(4, 6), 16);
+
+            return [r, g, b];
+        }
+
+        // Function to interpolate between two colors
+        function interpolateColor(color1, color2, factor) {
+            const rgb1 = hexToRgb(color1);
+            const rgb2 = hexToRgb(color2);
+
+            const r = Math.round(rgb1[0] * (1 - factor) + rgb2[0] * factor);
+            const g = Math.round(rgb1[1] * (1 - factor) + rgb2[1] * factor);
+            const b = Math.round(rgb1[2] * (1 - factor) + rgb2[2] * factor);
+
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        // Add the base CSS
         const css = `
 :root {
     /* Beach Theme */
-    --sand-color: #f4e4bc;
-    --deep-teal: #006d77;
-    --light-teal: #83c5be;
-    --seaweed-green: #2f5233;
-    --coral: #e29578;
-    --shell-pink: #ffddd2;
-    --ocean-blue: #006d77;
+    --beach-bg: #f4e4bc;
+    --beach-primary: #006d77;
+    --beach-secondary: #83c5be;
+    --beach-accent: #2f5233;
+    --beach-text: #252422;
+    --beach-quote: #006d77;
     
     /* Volcanic Theme */
     --volcanic-bg: #1a0f0f;
-    --lava-red: #ff4400;
-    --ember-orange: #ff8c42;
-    --ash-gray: #4a4a4a;
-    --magma-glow: #ff6b6b;
+    --volcanic-primary: #ff4400;
+    --volcanic-secondary: #ff8c42;
+    --volcanic-accent: #ff6b6b;
+    --volcanic-text: #ffffff;
+    --volcanic-quote: #ff6b6b;
     
-    /* Dynamic colors that will be interpolated */
-    --current-bg: var(--sand-color);
-    --current-primary: var(--deep-teal);
-    --current-secondary: var(--light-teal);
-    --current-accent: var(--seaweed-green);
-    --current-text: #252422;
+    /* Dynamic colors */
+    --current-bg: var(--beach-bg);
+    --current-primary: var(--beach-primary);
+    --current-secondary: var(--beach-secondary);
+    --current-accent: var(--beach-accent);
+    --current-text: var(--beach-text);
+    --current-quote: var(--beach-quote);
 }
 
-/* Update all color references to use dynamic variables */
-html {
-    background-color: var(--current-bg);
-    color: var(--current-text);
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-lipu {
-    border-left-color: var(--current-primary);
-    transition: border-color 0.3s ease;
-}
-
-memory {
-    border-left-color: var(--current-secondary);
-    transition: border-color 0.3s ease;
-}
-
-/* Add transitions to all other elements */
-ct, tn, pi, quote {
+/* Update transitions */
+html, body, lipu, memory, ct, tn, pi, quote {
     transition: all 0.3s ease;
+}
+
+/* Quote specific styling */
+quote {
+    color: var(--current-quote);
+    border-color: var(--current-primary);
+}
+
+quote::before, quote::after {
+    color: var(--current-quote);
 }`;
 
         // Add the CSS to the document
@@ -279,43 +298,34 @@ ct, tn, pi, quote {
         style.textContent = css;
         document.head.appendChild(style);
 
-        // Function to interpolate between two colors
-        function interpolateColor(color1, color2, factor) {
-            const result = color1.match(/\d+/g).map((a, i) => {
-                const b = color2.match(/\d+/g)[i];
-                return Math.round(a * (1 - factor) + b * factor);
-            });
-            return `rgb(${result.join(',')})`;
-        }
-
         // Function to update colors based on scroll position
         function updateColors() {
             const scrollPosition = window.scrollY;
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
             const scrollFactor = Math.min(scrollPosition / docHeight, 1);
 
-            // Get computed styles for both themes
-            const beachBg = '#f4e4bc';
-            const volcanicBg = '#1a0f0f';
-            const beachPrimary = '#006d77';
-            const volcanicPrimary = '#ff4400';
+            // Theme colors
+            const colors = {
+                bg: ['#f4e4bc', '#1a0f0f'],
+                primary: ['#006d77', '#ff4400'],
+                secondary: ['#83c5be', '#ff8c42'],
+                accent: ['#2f5233', '#ff6b6b'],
+                quote: ['#006d77', '#ff6b6b']
+            };
 
-            // Update CSS variables
-            document.documentElement.style.setProperty(
-                '--current-bg',
-                interpolateColor(beachBg, volcanicBg, scrollFactor)
-            );
+            // Update each color
+            Object.entries(colors).forEach(([key, [startColor, endColor]]) => {
+                document.documentElement.style.setProperty(
+                    `--current-${key}`,
+                    interpolateColor(startColor, endColor, scrollFactor)
+                );
+            });
 
-            document.documentElement.style.setProperty(
-                '--current-primary',
-                interpolateColor(beachPrimary, volcanicPrimary, scrollFactor)
-            );
-
-            // Update text color
+            // Update text color with a threshold
             const textColor = scrollFactor > 0.5 ? '#ffffff' : '#252422';
             document.documentElement.style.setProperty('--current-text', textColor);
 
-            // Add volcanic glow effect as scroll increases
+            // Add volcanic glow effect
             const glowOpacity = Math.max(0, (scrollFactor - 0.5) * 2);
             document.documentElement.style.setProperty(
                 '--volcanic-glow',
@@ -323,13 +333,22 @@ ct, tn, pi, quote {
             );
         }
 
-        // Add scroll event listener
+        // Add scroll event listener with debounce
+        let ticking = false;
         window.addEventListener('scroll', () => {
-            requestAnimationFrame(updateColors);
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    updateColors();
+                    ticking = false;
+                });
+                ticking = true;
+            }
         });
 
         // Initial color update
         updateColors();
+
+
     </script>
 </head>
 
