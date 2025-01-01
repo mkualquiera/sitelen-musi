@@ -334,6 +334,9 @@
             // Update text color with a threshold
             const textColor = scrollFactor > 0.5 ? '#ffffff' : '#252422';
             document.documentElement.style.setProperty('--current-text', textColor);
+            // same for quote color
+            const quoteColor = scrollFactor > 0.5 ? '#ff6b6b' : '#006d77';
+            document.documentElement.style.setProperty('--current-quote', quoteColor);
 
             // Add volcanic glow effect
             const glowOpacity = Math.max(0, (scrollFactor - 0.5) * 2);
