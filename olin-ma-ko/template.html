@@ -54,105 +54,25 @@
             src: url('/jan-ante/fonts/nasin-nanpa-4.0.1.otf') format('opentype');
         }
 
-
         :root {
-            --text-color: #000000;
-            --neon-blue: rgb(0, 112, 82);
-            --neon-purple: rgb(0, 82, 51);
-            --neon-green: #0f0;
-            --neon-red: #ff2d2d;
-            --dialog-bg: rgba(0, 0, 0, 0.8);
-            --quote-color: #ffab8a;
+            --sand-color: #f4e4bc;
+            --deep-teal: #006d77;
+            --light-teal: #83c5be;
+            --seaweed-green: #2f5233;
+            --coral: #e29578;
+            --shell-pink: #ffddd2;
+            --ocean-blue: #006d77;
+            --text-color: #252422;
         }
 
         html {
-            background-color: #feffb6;
+            background-color: var(--sand-color);
             color: var(--text-color);
+            font-family: 'nasin-nanpa', sans-serif;
+            font-size: 16px;
         }
 
-        /* Chapter styling */
-        lipu {
-            display: block;
-            margin: 2em 0;
-            padding: 1em;
-            border-left: 0.2em solid var(--neon-blue);
-        }
-
-        lipu h1 {
-            color: var(--neon-blue);
-            text-shadow: 0 0 10px var(--neon-blue);
-            margin-bottom: 1em;
-        }
-
-        /* Memory/flashback styling */
-        memory {
-            display: block;
-            margin: 2em 0;
-            padding: 1em;
-            border-left: 0.2em solid var(--neon-purple);
-        }
-
-        memory h1 {
-            color: var(--neon-purple);
-            text-shadow: 0 0 10px var(--neon-purple);
-            margin-bottom: 1em;
-        }
-
-        /* Cartouche styling - more subtle */
-        ct {
-            border: 0.12em solid var(--neon-blue);
-            border-radius: 5px;
-            display: inline-block;
-            margin: 0.13em;
-            padding: 0.2em 0.4em;
-            box-shadow: 0 0 3px var(--neon-blue);
-        }
-
-        /* Name styling */
-        tn {
-            border: 0.12em dashed var(--neon-red);
-            display: inline-block;
-            padding: 0.2em 0.4em;
-            box-shadow: 0 0 3px var(--neon-red);
-        }
-
-        /* Pi styling with constrained glow */
-        pi {
-            display: inline-block;
-            border-left: 0.12em solid var(--neon-purple);
-            border-bottom: 0.12em solid var(--neon-purple);
-            border-top: none;
-            border-right: none;
-            padding: 0.13em;
-            margin: 0.13em;
-            /* More precise box-shadow that only shows in bottom-left */
-            box-shadow:
-                -2px 2px 3px -1px var(--neon-purple),
-                /* Main shadow */
-                -1px 1px 2px -1px var(--neon-purple);
-            /* Subtle inner shadow */
-        }
-
-
-        /* Quote styling like JRPG dialog */
-        quote {
-            display: inline-block;
-            padding: 0.5em;
-            margin: 0.5em;
-            background: var(--dialog-bg);
-            border-radius: 0.3em;
-            box-shadow: 0 0 10px rgba(65, 65, 65, 0.5);
-            /* Add scanline effect to dialog */
-            background-image: repeating-linear-gradient(0deg,
-                    transparent,
-                    transparent 2px,
-                    rgba(59, 199, 255, 0.1) 2px,
-                    rgba(0, 135, 212, 0.1) 4px);
-            max-width: 100%;
-            color: var(--quote-color);
-        }
-
-        /* Option 1: More contrasting scanlines */
+        /* Noise overlay */
         html::after {
             content: "";
             position: fixed;
@@ -160,137 +80,124 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: repeating-linear-gradient(0deg,
-                    rgba(0, 0, 0, 0.2),
-                    /* Darker lines */
-                    rgba(0, 0, 0, 0.2) 1px,
-                    transparent 1px,
-                    transparent 4px
-                    /* Increased spacing */
-                );
+            opacity: 0.15;
             pointer-events: none;
-            z-index: 9999;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            z-index: 1;
         }
 
-        /* Vibrating h1s */
-        @keyframes glitch {
-            0% {
-                transform: translate(0);
-            }
+        /* Chapter styling */
+        lipu {
+            display: block;
+            margin: 2em 0;
+            padding: 1em;
+            border-left: 0.2em solid var(--light-teal);
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 0.5em;
+        }
 
-            20% {
-                transform: translate(-2px, 2px);
-            }
+        lipu h1 {
+            color: var(--seaweed-green);
+            font-size: 2em;
+            margin-bottom: 1em;
+            font-weight: bold;
+        }
 
-            40% {
-                transform: translate(-2px, -2px);
-            }
+        /* Memory/flashback styling */
+        memory {
+            display: block;
+            margin: 2em 0;
+            padding: 1em;
+            border-left: 0.2em solid var(--deep-teal);
+            background: rgba(131, 197, 190, 0.1);
+            border-radius: 0.5em;
+        }
 
-            60% {
-                transform: translate(2px, 2px);
-            }
+        memory h1 {
+            color: var(--deep-teal);
+            margin-bottom: 1em;
+        }
 
-            80% {
-                transform: translate(2px, -2px);
-            }
+        /* Cartouche styling */
+        ct {
+            border: 0.12em solid var(--light-teal);
+            border-radius: 5px;
+            display: inline-block;
+            margin: 0.13em;
+            padding: 0.2em 0.4em;
+            background: rgba(131, 197, 190, 0.1);
+        }
 
+        /* Name styling */
+        tn {
+            border: 0.12em solid var(--coral);
+            display: inline-block;
+            padding: 0.2em 0.4em;
+            background: rgba(226, 149, 120, 0.1);
+            border-radius: 5px;
+        }
+
+        /* Pi styling */
+        pi {
+            display: inline-block;
+            border-left: 0.12em solid var(--ocean-blue);
+            border-bottom: 0.12em solid var(--ocean-blue);
+            padding: 0.13em;
+            margin: 0.13em;
+            background: rgba(0, 109, 119, 0.05);
+        }
+
+        /* Quote styling */
+        quote {
+            display: inline-block;
+            padding: 0.8em;
+            margin: 0.5em;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 0.5em;
+            border: 1px solid var(--light-teal);
+            color: var(--text-color);
+        }
+
+        quote::before {
+            content: "「";
+            color: var(--deep-teal);
+        }
+
+        quote::after {
+            content: "」";
+            color: var(--deep-teal);
+        }
+
+        /* Title animation - gentle wave effect */
+        @keyframes wave {
+
+            0%,
             100% {
-                transform: translate(0);
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
             }
         }
 
-        lipu h2,
-        memory h2 {
-            animation: glitch 2s ease-in-out infinite;
+        lipu h1,
+        memory h1 {
+            animation: wave 4s ease-in-out infinite;
         }
 
-        /* Optional: we can also add a text-flicker effect */
-        @keyframes textFlickerBlue {
-            0% {
-                text-shadow: 0 0 10px var(--neon-blue);
-            }
-
-            5% {
-                text-shadow: none;
-            }
-
-            10% {
-                text-shadow: 0 0 10px var(--neon-blue);
-            }
-
-            20% {
-                text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
-            }
-
-            25% {
-                text-shadow: none;
-            }
-
-            30% {
-                text-shadow: 0 0 10px var(--neon-blue);
-            }
-
-            100% {
-                text-shadow: 0 0 10px var(--neon-blue);
-            }
-        }
-
-        @keyframes textFlickerPurple {
-            0% {
-                text-shadow: 0 0 10px var(--neon-purple);
-            }
-
-            5% {
-                text-shadow: none;
-            }
-
-            10% {
-                text-shadow: 0 0 10px var(--neon-purple);
-            }
-
-            20% {
-                text-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple);
-            }
-
-            25% {
-                text-shadow: none;
-            }
-
-            30% {
-                text-shadow: 0 0 10px var(--neon-purple);
-            }
-
-            100% {
-                text-shadow: 0 0 10px var(--neon-purple);
-            }
-        }
-
-        lipu h2 {
-            animation: glitch 1s ease-in-out infinite, textFlickerBlue 3s linear infinite;
-        }
-
-        memory h2 {
-            animation: glitch 1s ease-in-out infinite, textFlickerPurple 3s linear infinite;
-        }
-
-        open h1 {
-            text-shadow: 0 0 10px var(--neon-green);
-            font-size: 3em;
-        }
-
-        html {
-            font-family: 'nasin-nanpa', sans-serif;
-            font-size: 16px;
-            /* Base size for desktop */
-        }
-
+        /* Body text formatting */
         body {
-            word-break: break-all;
-            /* More aggressive breaking */
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2em;
+            line-height: 1.6;
+            word-break: break-word;
             overflow-wrap: break-word;
             white-space: pre-wrap;
         }
 
+        /* Ensure inline elements don't break awkwardly */
         ct,
         tn,
         pi {
@@ -299,20 +206,6 @@
             break-inside: avoid;
             break-after: avoid;
             break-before: avoid;
-        }
-
-        quote::before {
-            content: "「";
-            left: 0.5em;
-            /* Adjust position as needed */
-            top: 0;
-        }
-
-        quote::after {
-            content: "」";
-            right: 0.5em;
-            /* Adjust position as needed */
-            bottom: 0;
         }
     </style>
 </head>
