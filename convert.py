@@ -26,7 +26,7 @@ def load_table(path: str) -> dict:
             table[latin] = sitelen
 
     # sort table descending by key length
-    table = dict(sorted(table.items(), key=lambda x: len(x[0]), reverse=False))
+    table = dict(sorted(table.items(), key=lambda x: len(x[0]), reverse=True))
     return table
 
 
