@@ -48,7 +48,7 @@
                     }
                     if (char === ',') {
                         // disable ligatures
-                        return `<span style="display: inline-block; min-width: 1em; font-feature-settings: 'liga' 0, 'calt' 0, 'kern' 0;">${char}</span>`;
+                        return `<span class="comma" style="display: inline-block; min-width: 1em; font-feature-settings: 'liga' 0, 'calt' 0, 'kern' 0;">${char}</span>`;
                     }
                     // Add min-width to all character spans to prevent collapse
                     return `<span style="display: inline-block; min-width: 1em;">${char}</span>`;
@@ -64,12 +64,21 @@
             src: url('/sitelen-musi/fonts/linja li nja tan jan Jami.ttf') format('opentype');
         }
 
+        @font-face {
+            font-family: 'sitelen-pona-fallback';
+            src: url('/sitelen-musi/fonts/linjapimejapona1.0.otf') format('opentype');
+        }
+
         html {
             background-color: var(--current-bg);
             color: var(--current-text);
             font-family: 'sitelen-pona', sans-serif;
             font-size: 18px;
             transition: all 0.3s ease;
+        }
+
+        .comma {
+            font-family: 'sitelen-pona-fallback', sans-serif;
         }
 
         /* Noise overlay */
