@@ -132,6 +132,11 @@
 
                 storiesGrid.appendChild(card);
             });
+
+            // Delete original story tags
+            Array.from(storyElements).forEach(story => {
+                story.remove();
+            });
         });
     </script>
 </body>
