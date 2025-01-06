@@ -1,0 +1,7 @@
+formatting:
+  " pi ": <pi>
+  "~": </pi>
+  "{": <quote>
+  "}": </quote>
+  "[": <tn>
+  "]": </tn>

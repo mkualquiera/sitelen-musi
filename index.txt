@@ -1,0 +1,2 @@
+<story url="./olin-ma-ko">olin ma ko</story>
+<story url="./jan-ante">jan ante</story>
