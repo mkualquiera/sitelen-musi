@@ -38,4 +38,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }).join('');
         node.parentNode.replaceChild(span, node);
     });
+
+    // Delete all spans that just contain whitespace
+    document.querySelectorAll('span').forEach(span => {
+        if (span.textContent.trim() === '') {
+            span.remove();
+        }
+    });
 });
