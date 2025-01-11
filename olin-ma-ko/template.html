@@ -227,7 +227,7 @@
             const rgb1 = hexToRgbString(color1);
             const rgb2 = hexToRgbString(color2);
 
-            return mixbox.lerp(rgb1, rgb2, factor);
+            return mixbox.lerp(rgb1, rgb2, factor).toString();
         }
 
         // Function to interpolate RGB components
@@ -242,10 +242,9 @@
             const rgb1 = hexToRgbString(color1);
             const rgb2 = hexToRgbString(color2);
 
-            const fulltext = mixbox.lerp(rgb1, rgb2, factor);
-            const rgb = fulltext.split(',').map(x => parseInt(x));
+            const color = mixbox.lerp(rgb1, rgb2, factor);
 
-            return `${rgb[0]}, ${rgb[1]}, ${rgb[2]}`;
+            return `${color[0]}, ${color[1]}, ${color[2]}`;
         }
 
         // Add the base CSS
@@ -290,7 +289,12 @@
         function updateColors() {
             const scrollPosition = window.scrollY;
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollFactor = Math.min(scrollPosition / docHeight, 1);
+            var scrollFactor = Math.min(scrollPosition / docHeight, 1);
+
+            // handle nan scrollFactor
+            if (isNaN(scrollFactor)) {
+                scrollFactor = 0;
+            }
 
             // Theme colors
             const colors = {
