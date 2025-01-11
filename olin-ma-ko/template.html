@@ -15,6 +15,7 @@
     <meta name="twitter:image" content="/sitelen-musi/olin-ma-ko/image.png">
 
     <script src="/sitelen-musi/layout_fixer.js"></script>
+    <script src="https://scrtwpns.com/mixbox.js"></script>
 
     <style>
         @font-face {
@@ -206,28 +207,45 @@
             return [r, g, b];
         }
 
+        function rgbToRgbString(rgb) {
+            return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+        }
+
+        function hexToRgbString(hex) {
+            return rgbToRgbString(hexToRgb(hex));
+        }
+
         // Function to interpolate between two colors
         function interpolateColor(color1, color2, factor) {
-            const rgb1 = hexToRgb(color1);
-            const rgb2 = hexToRgb(color2);
+            //const rgb1 = hexToRgb(color1);
+            //const rgb2 = hexToRgb(color2);
+            //const r = Math.round(rgb1[0] * (1 - factor) + rgb2[0] * factor);
+            //const g = Math.round(rgb1[1] * (1 - factor) + rgb2[1] * factor);
+            //const b = Math.round(rgb1[2] * (1 - factor) + rgb2[2] * factor);
+            //return `rgb(${r}, ${g}, ${b})`;
 
-            const r = Math.round(rgb1[0] * (1 - factor) + rgb2[0] * factor);
-            const g = Math.round(rgb1[1] * (1 - factor) + rgb2[1] * factor);
-            const b = Math.round(rgb1[2] * (1 - factor) + rgb2[2] * factor);
+            const rgb1 = hexToRgbString(color1);
+            const rgb2 = hexToRgbString(color2);
 
-            return `rgb(${r}, ${g}, ${b})`;
+            return mixbox.lerp(rgb1, rgb2, factor);
         }
 
         // Function to interpolate RGB components
         function interpolateRgbComponents(color1, color2, factor) {
-            const rgb1 = hexToRgb(color1);
-            const rgb2 = hexToRgb(color2);
+            //const rgb1 = hexToRgb(color1);
+            //const rgb2 = hexToRgb(color2);
+            //const r = Math.round(rgb1[0] * (1 - factor) + rgb2[0] * factor);
+            //const g = Math.round(rgb1[1] * (1 - factor) + rgb2[1] * factor);
+            //const b = Math.round(rgb1[2] * (1 - factor) + rgb2[2] * factor);
+            //return `${r}, ${g}, ${b}`;
 
-            const r = Math.round(rgb1[0] * (1 - factor) + rgb2[0] * factor);
-            const g = Math.round(rgb1[1] * (1 - factor) + rgb2[1] * factor);
-            const b = Math.round(rgb1[2] * (1 - factor) + rgb2[2] * factor);
+            const rgb1 = hexToRgbString(color1);
+            const rgb2 = hexToRgbString(color2);
 
-            return `${r}, ${g}, ${b}`;
+            const fulltext = mixbox.lerp(rgb1, rgb2, factor);
+            const rgb = fulltext.split(',').map(x => parseInt(x));
+
+            return `${rgb[0]}, ${rgb[1]}, ${rgb[2]}`;
         }
 
         // Add the base CSS
