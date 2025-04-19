@@ -39,6 +39,7 @@ jobs:
           python convert.py --template template.html --preprocessing preprocessing.yaml table.ibus index.txt > index.html 
           python convert.py --template jan-ante/template.html --preprocessing jan-ante/preprocessing.yaml table.ibus jan-ante/story.txt > jan-ante/index.html
           python convert.py --template olin-ma-ko/template.html --preprocessing olin-ma-ko/preprocessing.yaml table.ibus olin-ma-ko/story.txt > olin-ma-ko/index.html
+          python convert.py --template nasin-olin/template.html --preprocessing nasin-olin/preprocessing.yaml table.ibus nasin-olin/story.txt > nasin-olin/index.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

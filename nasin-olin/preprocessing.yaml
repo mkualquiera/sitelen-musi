@@ -1,0 +1,10 @@
+characters:
+  Kale Opuso: <ct> kama ale lawa esun open pali utala sona open </ct>
+  Inli: <ct> ilo nasa lipu ike </ct>
+formatting:
+  "pi ": <pi>
+  "~": </pi>
+  "{": <quote>
+  "}": </quote>
+  "[": <tn>
+  "]": </tn>
