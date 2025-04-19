@@ -1,2 +1,3 @@
+<story url="./nasin-olin">nasin olin</story>
 <story url="./olin-ma-ko" mature="true">olin ma ko</story>
 <story url="./jan-ante">jan ante</story>
